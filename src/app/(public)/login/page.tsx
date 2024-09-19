@@ -1,5 +1,5 @@
 "use client";
-// app/signup.tsx
+// app/login.tsx
 
 import React, { useState } from "react";
 import styles from "./login.module.css"; // Import CSS module for styling
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { setCookie } from "../../../utils/ManageCookie";
 import { objectToString } from "@/utils/utils";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import the Link component
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -35,9 +36,15 @@ const Login: React.FC = () => {
         toast.success(resp.data.message);
         if (resp.data.success) {
           const user = resp.data.user;
-          router.replace("/");
+
+          // Set cookies first
           setCookie("token", user._id);
           setCookie("user", objectToString(user));
+
+          // Redirect after a small delay to ensure cookies are set
+          setTimeout(() => {
+            router.replace("/");
+          }, 100); // 100ms delay
         }
         _loading(false);
       })
@@ -78,6 +85,14 @@ const Login: React.FC = () => {
           {loading ? "Logging In..." : "Log In"}
         </button>
       </form>
+
+      {/* Signup link */}
+      <div className={styles.signupContainer}>
+        <p>Don&apos;t have an account?</p>
+        <Link href="/signup" className={styles.signupLink}>
+          Sign up
+        </Link>
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import styles from "./signup.module.css"; // Import CSS module for styling
 import axiosInstance from "@/services/axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import the Link component
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -104,6 +105,14 @@ const Signup: React.FC = () => {
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
       </form>
+
+      {/* Login Link Container */}
+      <div className={styles.loginContainer}>
+        <p>Already have an account?</p>
+        <Link href="/login" className={styles.loginLink}>
+          Log In
+        </Link>
+      </div>
     </div>
   );
 };

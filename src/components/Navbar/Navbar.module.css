@@ -1,0 +1,44 @@
+/* components/Navbar.module.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a1a1a; /* Dark background */
+    color: white;
+  }
+  
+  .logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f39c12;
+    text-decoration: none;
+  }
+  
+  .navLinks {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .navLinks button {
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navLinks a:hover, .navLinks button:hover {
+    color: #f39c12; /* Hover color */
+  }
+  

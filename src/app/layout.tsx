@@ -6,6 +6,7 @@ import Footer from "../components/Footer/Footer"; // Import the Footer component
 import "./globals.css"; // Import global styles
 import styles from "./layout.module.css"; // Import layout-specific styles
 import { Toaster } from "react-hot-toast";
+import { CookiesProvider } from "next-client-cookies/server";
 
 export const metadata = {
   title: "My Store",
@@ -18,9 +19,11 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <head>{/* Add any additional head elements or metadata here */}</head>
       <body className={styles.body}>
         <Toaster position="top-center" />
-        <Navbar />
-        <main className={styles.main}>{children}</main>
-        <Footer />
+        <CookiesProvider>
+          <Navbar />
+          <main className={styles.main}>{children}</main>
+          <Footer />
+        </CookiesProvider>
       </body>
     </html>
   );

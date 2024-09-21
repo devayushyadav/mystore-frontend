@@ -7,7 +7,9 @@ const publicPaths = [
 ]
 const protectedPaths = [
   '/',
-  '/products'
+  '/products',
+  '/add-product',
+  '/my-products'
 ]
  
 // This function can be marked `async` if using `await` inside
@@ -41,5 +43,7 @@ export const config = {
     '/login',
     '/signup',
     '/products',
+    '/add-product',
+    '/my-products'
   ],
 };

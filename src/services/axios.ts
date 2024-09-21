@@ -1,6 +1,7 @@
 // lib/axiosInterceptor.js
 
 import axios from 'axios';
+import { getCookies } from 'next-client-cookies/server';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
@@ -14,10 +15,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Modify the request configuration before sending
-    const token = localStorage.getItem('token'); // Retrieve token from local storage or any other method
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // const cookies = getCookies();
+    // const token = 'asdasdasdsa';
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
     return config;
   },
   (error) => {
@@ -36,7 +38,13 @@ axiosInstance.interceptors.response.use(
     // Handle response errors
     if (error.response && error.response.status === 401) {
       // Handle unauthorized errors (e.g., redirect to login page)
-      window.location.href = '/login';
+      const cookieStore = document.cookie.split(";");
+      cookieStore.forEach((cookie) => {
+        document.cookie = cookie.split("=")[0] +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      });
+      setTimeout(()=>{
+        window.location.href = '/login';        
+      },2000)
     }
     return Promise.reject(error);
   }

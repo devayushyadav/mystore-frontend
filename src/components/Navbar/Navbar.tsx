@@ -19,10 +19,7 @@ const Navbar: React.FC = async () => {
             <Link href="/add-product">Add Product</Link>
           </li>
           <li>
-            <Link href="/list-products">List Products</Link>
-          </li>
-          <li>
-            <Link href="/update-product">Update Products</Link>
+            <Link href="/my-products">My Products</Link>
           </li>
           <li>
             <Link href="/profile">Profile</Link>

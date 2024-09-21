@@ -49,36 +49,32 @@ const ProductForm: React.FC = () => {
     setLoading(true);
 
     // Create FormData to include both text fields and file
+    const token  = cookies.get("token");
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
     formDataToSend.append("price", formData.price);
     formDataToSend.append("company", formData.company);
     formDataToSend.append("category", formData.category);
     formDataToSend.append("color", formData.color);
+    formDataToSend.append("userId", token || '');
 
     if (imageFile) {
-      try {
-        // Convert image file to Base64 and append to form data
-        const imageBase64Code = await generateBase64String(imageFile);
-        formDataToSend.append("image", imageBase64Code as string); // Type assertion as string
-      } catch (error) {
-        toast.error(`Error converting image to Base64.Due to ${error}`);
-        setLoading(false);
-        return;
-      }
+      formDataToSend.append("image", imageFile); // Type assertion as string
     }
 
-    const token  = cookies.get("token");
 
     axiosInstance
       .post("/add-product", formDataToSend,{
-        headers: { Authorization: `Bearer ${token}` } // Add JWT token to the request headers
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+         } // Add JWT token to the request headers
       }
     )
       .then((resp) => {
         toast.success(resp.data.message);
         if (resp.data.success) {
-          router.push("/products"); // Redirect to products page
+          router.push("/my-products"); // Redirect to products page
         }
         setLoading(false);
       })

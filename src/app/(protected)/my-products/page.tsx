@@ -1,48 +1,52 @@
-import React from "react";
-import styles from "./ProductList.module.css"; // Import CSS module for styling
+// app/products/page.tsx (or page.jsx if using JavaScript)
+import React from 'react';
+import styles from './ProductList.module.css';
+import axiosInstance from '@/services/axios';
+import { cookies } from 'next/headers';
+import { Product } from '@/config/interfaces';
 
-// Sample product data for demonstration
-const products = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: "$100",
-    company: "Company A",
-    category: "Category 1",
-    color: "Red",
-    image: "/images/product1.jpg", // Replace with actual image path
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: "$150",
-    company: "Company B",
-    category: "Category 2",
-    color: "Blue",
-    image: "/images/product2.jpg", // Replace with actual image path
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: "$150",
-    company: "Company B",
-    category: "Category 3",
-    color: "Blue",
-    image: "/images/product3.jpg", // Replace with actual image path
-  },
-  {
-    id: 4,
-    name: "Product 4",
-    price: "$150",
-    company: "Company B",
-    category: "Category 4",
-    color: "Blue",
-    image: "/images/product4.jpg", // Replace with actual image path
-  },
-  // Add more products here...
-];
+// Define the Product type
+interface ProductListProps {
+  products: Product[];
+  error?: string;
+}
 
-const ProductList: React.FC = () => {
+const fetchProducts = async (): Promise<ProductListProps> => {
+  const cookieStore = cookies(); // Access cookies in the `app` directory
+  const token = cookieStore.get('token')?.value;
+
+  if (!token) {
+    return {
+      products: [],
+      error: 'Unauthorized: Please login first',
+    };
+  }
+
+  try {
+    const response = await axiosInstance.get(`/my-products/${token}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return {
+      products: response.data.product,
+    };
+  } catch (error: any) {
+    return {
+      products: [],
+      error: error.response?.data?.message || 'An error occurred while fetching products',
+    };
+  }
+};
+
+const ProductList: React.FC = async () => {
+  const { products, error } = await fetchProducts();
+
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Product Listing</h1>

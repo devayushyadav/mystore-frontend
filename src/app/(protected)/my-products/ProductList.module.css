@@ -1,66 +1,135 @@
-/* app/ProductList.module.css */
+/* app/products/ProductList.module.css */
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #1e1e1e; /* Dark background */
-    color: #ffffff; /* White text color */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1e1e1e; /* Dark background */
+  color: #ffffff; /* White text color */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #f39c12; /* Accent color */
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between products */
+}
+
+.productCard {
+  display: flex;
+  background-color: #2e2e2e; /* Darker background for product cards */
+  border-radius: 10px;
+  overflow: hidden; /* Ensure image and details stay inside the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-10px); /* Slightly lift the card on hover */
+  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2); /* Hover effect */
+}
+
+.image {
+  width: 200px; /* Set a fixed width for images */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the area without distorting the image */
+}
+
+.details {
+  flex: 1; /* Use remaining space for details */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the details */
+}
+
+.productName {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #f39c12; /* Accent color */
+}
+
+.productPrice,
+.productCompany,
+.productCategory,
+.productColor {
+  margin-bottom: 0.3rem;
+}
+
+/* Skeleton Styles */
+
+.skeletonImage {
+  background-color: #3a3a3a; /* Dark grey for skeleton image */
+  width: 200px; /* Match the width of the actual image */
+  height: 277px; /* Approximate height of the actual image */
+  border-radius: 8px;
+}
+
+.skeletonDetails {
+  flex: 1; /* Use remaining space for details */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the details */
+}
+
+.skeletonHeader{
+  background-color: #3a3a3a; /* Dark grey for skeleton text */
+  height: 20px; /* Default height for skeleton text */
+  margin: 1rem 0 0.5rem 0; /* Space between skeleton lines */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+.skeletonText {
+  background-color: #3a3a3a; /* Dark grey for skeleton text */
+  height: 20px; /* Default height for skeleton text */
+  margin: 1rem 0 0.3rem 0; /* Space between skeleton lines */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+.skeletonText:first-child {
+  width: 60%; /* Width of the first skeleton text */
+}
+
+.skeletonText:nth-child(2) {
+  width: 80%; /* Width of the second skeleton text */
+}
+
+.skeletonText:last-child {
+  width: 40%; /* Width of the last skeleton text */
+}
+
+/* Loader Styles (if needed) */
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height for the loading state */
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .title {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    color: #f39c12; /* Accent color */
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .productList {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem; /* Space between products */
-  }
-  
-  .productCard {
-    display: flex;
-    background-color: #2e2e2e; /* Darker background for product cards */
-    border-radius: 10px;
-    overflow: hidden; /* Ensure image and details stay inside the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-  }
-  
-  .productCard:hover {
-    transform: translateY(-10px); /* Slightly lift the card on hover */
-    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2); /* Hover effect */
-  }
-  
-  .image {
-    width: 200px; /* Set a fixed width for images */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the area without distorting the image */
-  }
-  
-  .details {
-    flex: 1; /* Use remaining space for details */
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Vertically center the details */
-  }
-  
-  .productName {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: #f39c12; /* Accent color */
-  }
-  
-  .productPrice,
-  .productCompany,
-  .productCategory,
-  .productColor {
-    margin-bottom: 0.3rem;
-  }
-  
+}

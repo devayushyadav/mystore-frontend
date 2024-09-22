@@ -5,7 +5,6 @@ import styles from "./ProductForm.module.css"; // Import CSS module for styling
 import axiosInstance from "@/services/axios"; // Assuming you have a configured axios instance
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { generateBase64String } from "@/utils/utils";
 import { useCookies } from 'next-client-cookies';
 
 const ProductForm: React.FC = () => {

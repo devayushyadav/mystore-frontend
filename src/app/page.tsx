@@ -5,7 +5,6 @@ import axiosInstance from '@/services/axios';
 import { cookies } from 'next/headers';
 import { Product } from '@/config/interfaces';
 import Image from 'next/image';
-import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 
 interface ProductListProps {
   products: Product[];

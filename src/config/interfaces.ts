@@ -6,4 +6,5 @@ export interface Product {
     category: string;
     color: string;
     image: string;
+    _id?:string
   }

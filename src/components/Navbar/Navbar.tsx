@@ -25,6 +25,9 @@ const Navbar: React.FC = async () => {
             <Link href="/profile">Profile</Link>
           </li>
           <li>
+            <Link href="/cart">Cart</Link>
+          </li>
+          <li>
             <Logout />
           </li>
         </ul>

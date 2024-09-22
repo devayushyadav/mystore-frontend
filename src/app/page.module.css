@@ -34,8 +34,18 @@
   box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2); /* Hover effect */
 }
 
-.card h3 {
-  margin: 0 0 1rem 0;
+.imageContainer {
+  position: relative; /* Required for the Image component */
+  width: 100%; /* Full width of the card */
+  height: 150px; /* Match the height of the actual image */
+}
+
+.image {
+  border-radius: 8px; /* Ensure image corners match card style */
+}
+
+.card h2 {
+  margin: 20px 0;
   font-size: 1.5rem;
   color: #f39c12; /* Accent color */
 }
@@ -45,4 +55,39 @@
   font-size: 1rem;
   line-height: 1.5;
   color: #cccccc; /* Light text color */
+}
+
+/* Skeleton Styles */
+.skeletonHeader {
+  background-color: #3a3a3a; /* Dark grey for skeleton text */
+  height: 20px; /* Default height for skeleton text */
+  margin-bottom: 1rem; /* Space between skeleton lines */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+.skeletonImageContainer {
+  position: relative; /* Required for the Image component */
+  width: 100%; /* Full width of the card */
+  height: 150px; /* Match the height of the actual image */
+  background-color: #3a3a3a; /* Dark grey fallback color */
+  border-radius: 8px; /* Slightly rounded corners */
+  margin-bottom: 1rem; /* Space between skeleton image and text */
+}
+
+
+.skeletonText {
+  background-color: #3a3a3a; /* Dark grey for skeleton text */
+  height: 20px; /* Default height for skeleton text */
+  margin-bottom: 0.5rem; /* Space between skeleton lines */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+.skeletonText:last-child {
+  width: 60%; /* Different width for the last skeleton line */
+}
+
+.notfound{
+  margin: 0 auto;
+  width: max-content;
+  font-size: 24px;
 }

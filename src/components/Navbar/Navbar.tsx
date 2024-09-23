@@ -9,9 +9,8 @@ import { stringToObject } from "@/utils/utils";
 const Navbar: React.FC = async () => {
   const isLoggedIn = await getCookie("token");
   const userData = await getCookie("user");
-  const userName = stringToObject(userData);
+  const userName = stringToObject(userData || "");
 
-  console.log(userName);
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>

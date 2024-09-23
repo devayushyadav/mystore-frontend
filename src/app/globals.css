@@ -43,6 +43,23 @@ main{
   color: #f39c12 !important;
 }
 
+.react-confirm-alert-overlay{
+  background-color: #0000008a !important;
+}
+
+.react-confirm-alert-body{
+  background-color: #000000 !important;
+  color: white !important;
+}
+
+.react-confirm-alert-button-group button{
+  font-size: 14px;
+}
+
+.react-confirm-alert-button-group button:last-child{
+  background-color: #e67e22 !important;
+}
+
 
 .pointer{
   cursor: pointer;

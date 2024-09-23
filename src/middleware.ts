@@ -9,8 +9,9 @@ const protectedPaths = [
   '/',
   '/products',
   '/add-product',
-  '/my-products'
-]
+  '/my-products',
+  '/my-products/:path*',  // Change this line
+];
  
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
@@ -25,10 +26,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if(!token && protectedPaths.includes(pathname)){
+  // Check if the requested path matches any protected paths
+  const isProtectedPath = protectedPaths.some(path => {
+    const regex = new RegExp(`^${path.replace(':path*', '(.+)?')}$`);
+    return regex.test(pathname);
+  });
+
+  // Redirect logic for unauthenticated users trying to access protected paths
+  if (!token && isProtectedPath) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
-    return NextResponse.redirect(url)
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next()
@@ -44,6 +52,6 @@ export const config = {
     '/signup',
     '/products',
     '/add-product',
-    '/my-products'
+    '/my-products/:path*', // This allows for dynamic segments
   ],
 };

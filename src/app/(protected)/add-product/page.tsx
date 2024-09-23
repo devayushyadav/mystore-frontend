@@ -66,7 +66,6 @@ const ProductForm: React.FC = () => {
     formDataToSend.append("company", formData.company);
     formDataToSend.append("category", formData.category);
     formDataToSend.append("color", formData.color);
-    formDataToSend.append("userId", token || "");
 
     if (imageFile) {
       formDataToSend.append("image", imageFile); // Type assertion as string

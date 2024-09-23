@@ -1,17 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import styles from "./ProductForm.module.css"; // Import CSS module for styling
+import React, { useEffect, useState } from "react";
+import styles from "../../add-product/ProductForm.module.css"; // Import CSS module for styling
 import axiosInstance from "@/services/axios"; // Assuming you have a configured axios instance
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useCookies } from "next-client-cookies";
-import { generateBase64String } from "@/utils/utils";
-import UploadImage from "@/assets/cloud-computing.svg";
+import { base64ToFile, generateBase64String } from "@/utils/utils";
 
-const ProductForm: React.FC = () => {
+interface ProductFormProps {
+  params: { productId: string };
+}
+
+const ProductForm: React.FC<ProductFormProps> = ({ params }) => {
   const router = useRouter();
   const cookies = useCookies();
+
+  const token = cookies.get("token");
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,8 +29,43 @@ const ProductForm: React.FC = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageUpdated, _imageUpdated] = useState<boolean>(false);
+
   const [loading, setLoading] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    axiosInstance
+      .get(`/my-products/${params.productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => {
+        if (resp.data.success) {
+          const product = resp.data.product;
+          setFormData({
+            name: product.name,
+            price: product.price,
+            company: product.company,
+            category: product.category,
+            color: product.color,
+          });
+          setImagePreview(product.image);
+          const file = base64ToFile(product.image, "image.jpg", "image/jpeg");
+          setImageFile(file);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        const resp = err.response;
+        toast.error(resp.data.message);
+        setLoading(false);
+      });
+  }, [token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,6 +78,7 @@ const ProductForm: React.FC = () => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setImageFile(e.target.files[0]);
+      _imageUpdated(true);
       try {
         const base64 = await generateBase64String(e.target.files[0]);
         setImagePreview(base64 as string);
@@ -59,7 +101,7 @@ const ProductForm: React.FC = () => {
     setLoading(true);
 
     // Create FormData to include both text fields and file
-    const token = cookies.get("token");
+
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
     formDataToSend.append("price", formData.price);
@@ -68,12 +110,12 @@ const ProductForm: React.FC = () => {
     formDataToSend.append("color", formData.color);
     formDataToSend.append("userId", token || "");
 
-    if (imageFile) {
+    if (imageFile && imageUpdated) {
       formDataToSend.append("image", imageFile); // Type assertion as string
     }
 
     axiosInstance
-      .post("/add-product", formDataToSend, {
+      .put(`/my-products/${params.productId}`, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -99,6 +141,10 @@ const ProductForm: React.FC = () => {
     if (!name || !price || !company || !category || !color) {
       toast.error("Please fill in all the fields.");
       return false;
+    }
+
+    if (!imageUpdated) {
+      return true;
     }
 
     if (!imageFile) {
@@ -128,7 +174,7 @@ const ProductForm: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Add New Product</h1>
+      <h1 className={styles.title}>Update Product</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.field}>
           <label htmlFor="name">Product Name</label>
@@ -186,14 +232,12 @@ const ProductForm: React.FC = () => {
             className={styles.imagePreviewWrapper}
             onClick={handleImageClick}
           >
-            {imagePreview ? (
+            {imagePreview && (
               <img
                 src={imagePreview}
                 alt="Preview"
                 className={styles.imagePreview}
               />
-            ) : (
-              <UploadImage className="pointer" />
             )}
             <input
               type="file"
@@ -207,7 +251,7 @@ const ProductForm: React.FC = () => {
           </div>
         </div>
         <button type="submit" className={styles.submitButton}>
-          {loading ? "Adding..." : "Add"}
+          {loading ? "Updating..." : "Make Changes"}
         </button>
       </form>
     </div>

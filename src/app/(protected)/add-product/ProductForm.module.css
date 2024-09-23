@@ -42,6 +42,26 @@
     color: #ffffff; /* White text color */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
   }
+
+  .imagePreviewWrapper {
+    display: flex;
+    justify-content: center; /* Centers the image */
+    align-items: center;
+    margin-top: 10px; /* Adjust spacing as needed */
+  }
+  
+  .imagePreview {
+    border-radius: 8px; /* 8px radius */
+    width: 50%; /* Adjust size as needed */
+    height: 50%; /* Adjust size as needed */
+    object-fit: cover; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between image and input */
+    cursor: pointer;
+  }
+  
+  .imageInput {
+    display: none; /* Hide the input field */
+  }
   
   .submitButton {
     padding: 0.75rem;

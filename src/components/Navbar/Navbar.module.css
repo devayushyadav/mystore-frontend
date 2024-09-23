@@ -14,6 +14,9 @@
     color: #f39c12;
     text-decoration: none;
   }
+  .logo a:hover {
+    color: #f39c12;
+  }
   
   .navLinks {
     list-style: none;

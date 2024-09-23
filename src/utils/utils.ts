@@ -37,4 +37,27 @@ export const generateBase64String = (file: File): Promise<string | ArrayBuffer |
       };
     });
   };
+
+
+export const base64ToFile = (base64String :string, fileName :string, mimeType :string) => {
+  // Decode the Base64 string
+  const byteString = atob(base64String.split(',')[1]);
+
+  // Create an array of 8-bit unsigned integers
+  const arrayBuffer = new ArrayBuffer(byteString.length);
+  const uint8Array = new Uint8Array(arrayBuffer);
+
+  // Assign each character's code to the buffer
+  for (let i = 0; i < byteString.length; i++) {
+    uint8Array[i] = byteString.charCodeAt(i);
+  }
+
+  // Create a Blob from the Uint8Array
+  const blob = new Blob([uint8Array], { type: mimeType });
+
+  // Create a File from the Blob (optional, if you need a File object instead of a Blob)
+  const file = new File([blob], fileName, { type: mimeType });
+
+  return file;
+}
   

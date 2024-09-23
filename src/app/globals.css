@@ -42,3 +42,8 @@ main{
   background-color: #252525 !important;
   color: #f39c12 !important;
 }
+
+
+.pointer{
+  cursor: pointer;
+}

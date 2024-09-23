@@ -30,3 +30,15 @@ main{
 ::-webkit-scrollbar-thumb:hover {
   background-color: #e67e22; /* Darker orange when hovering */
 }
+
+.dropdown-menu{
+  background-color: #252525 !important;
+}
+.dropdown-item{
+  color: white !important;
+  transition: color 0.3s ease;
+}
+.dropdown-item:hover{
+  background-color: #252525 !important;
+  color: #f39c12 !important;
+}

@@ -1,21 +1,22 @@
 // components/Footer.tsx
-'use client'
-import { useRouter } from 'next/navigation';
-import React from 'react';
+"use client";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const Logout: React.FC = () => {
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const logout =() => {
-    document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  const logout = () => {
+    document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setTimeout(() => {
       // Redirect to login page after 1 second to prevent flashing the login page
-      router.push('/login');
-    },100)
-  }
+      router.push("/login");
+    }, 100);
+  };
   return (
-    <button onClick={()=>logout()}>Logout</button>
+    <button onClick={() => logout()} className="dropdown-item">
+      Logout
+    </button>
   );
 };
 

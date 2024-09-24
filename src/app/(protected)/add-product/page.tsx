@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCookies } from "next-client-cookies";
 import { generateBase64String } from "@/utils/utils";
 import UploadImage from "@/assets/cloud-computing.svg";
+import { revalidateResponse } from "@/utils/actions";
 
 const ProductForm: React.FC = () => {
   const router = useRouter();
@@ -81,6 +82,7 @@ const ProductForm: React.FC = () => {
       .then((resp) => {
         toast.success(resp.data.message);
         if (resp.data.success) {
+          revalidateResponse("/my-products");
           router.push("/my-products"); // Redirect to products page
         }
         setLoading(false);

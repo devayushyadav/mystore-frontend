@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useCookies } from "next-client-cookies";
+import { usePathname } from "next/navigation";
+import { revalidateResponse } from "@/utils/actions";
 
 // Define prop types using TypeScript
 interface DeleteProps {
@@ -14,6 +16,7 @@ interface DeleteProps {
 
 const Delete: React.FC<DeleteProps> = ({ productId }) => {
   const cookies = useCookies();
+  const pathname = usePathname();
 
   const token = cookies.get("token");
   const [loading, _loading] = useState<boolean>(false);
@@ -38,6 +41,7 @@ const Delete: React.FC<DeleteProps> = ({ productId }) => {
               .then((resp) => {
                 toast.success(resp.data.message);
                 if (resp.data.success) {
+                  revalidateResponse(pathname);
                 }
                 _loading(false);
               })

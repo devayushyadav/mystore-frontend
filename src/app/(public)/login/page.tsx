@@ -38,7 +38,7 @@ const Login: React.FC = () => {
           const user = resp.data.user;
 
           // Set cookies first
-          setCookie("token", user._id);
+          setCookie("token", resp.data.token);
           setCookie("user", objectToString(user));
 
           // Redirect after a small delay to ensure cookies are set
